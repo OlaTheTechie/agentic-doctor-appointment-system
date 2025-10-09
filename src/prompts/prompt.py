@@ -7,7 +7,7 @@ options = list(members_dict.keys()) + ["FINISH"]
 
 worker_info = '\n\n'.join(
     [f"WORKER: {member} \nDESCRIPTION: {description}" for member, description in members_dict.items()]
-) + "\n\nWORKER: FINISH \nDESCRIPTION: Use this once the user’s query is fully resolved or no further action is required."
+) + "\n\nWORKER: FINISH \nDESCRIPTION: Use this once the user's query is fully resolved or no further action is required."
 
 system_prompt = (
     "You are a supervisor tasked with managing a conversation between the following workers. "

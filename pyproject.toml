@@ -6,7 +6,7 @@ authors = [
     {name = "oladimeji balogun",email = "oladimejib.tech@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<4.0.0"
 dependencies = [
     "langgraph (>=0.6.8,<0.7.0)",
     "langchain-groq (>=0.3.8,<0.4.0)",
@@ -15,7 +15,8 @@ dependencies = [
     "uvicorn (>=0.37.0,<0.38.0)",
     "pydantic (>=2.11.10,<3.0.0)",
     "pandas (>=2.3.3,<3.0.0)",
-    "dotenv (>=0.9.9,<0.10.0)"
+    "dotenv (>=0.9.9,<0.10.0)",
+    "langchain-openai (>=0.3.35,<0.4.0)"
 ]
 
 
