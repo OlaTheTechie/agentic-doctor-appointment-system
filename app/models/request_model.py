@@ -19,3 +19,10 @@ class BookingRequest(BaseModel):
     doctor_name: str = Field(..., examples="Dr. Kevin Anderson")
     appointment_date: str = Field(..., examples="12-10-2025")
     appointment_time: str = Field(..., examples="10:20 AM")
+
+class AgentRequest(BaseModel):
+    id_number: int
+    messages: List[Message]
+    next: Optional[str] = None
+    query: Optional[str] = None
+    current_reasoning: Optional[str] = None
