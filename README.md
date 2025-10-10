@@ -1,7 +1,7 @@
 # doctors-appointment-agent
 A multi-agent healthcare assistant that books, manages, and optimizes doctor appointments effortlessly
 
-![Project Screenshot](https://github.com/OlaTheTechie/doctors-appointment-agent/blob/main/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
+![Project Screenshot](/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
 
 
 ## Overview
