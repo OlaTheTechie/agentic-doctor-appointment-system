@@ -7,13 +7,6 @@ class Router(TypedDict):
     reasoning: str
 
 
-# class AgentState(TypedDict): 
-#     messages: Annotated[List[Any], add_messages]
-#     id_number: int
-#     next: Literal["information_node", "booking_node", "FINISH"]
-#     query: str 
-#     current_reasoning: str
-
 class AgentState(TypedDict):
     messages: Annotated[List[Any], add_messages]
     id_number: int

@@ -4,11 +4,11 @@ from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
 class LLM:
-    def __init__(self, model_name="gpt-3.5-turbo"):
+    def __init__(self, model_name="openai/gpt-oss-120b"):
         if not model_name:
             raise ValueError("model name is not defined")
         self.model_name = model_name
-        self.gpt_model = ChatOpenAI(model_name=self.model_name)
+        self.gpt_model = ChatGroq(model_name=self.model_name)
 
     def get_model(self):
         return self.gpt_model

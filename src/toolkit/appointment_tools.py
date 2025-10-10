@@ -120,14 +120,14 @@ def reschedule_appointment(
     if len(availability_for_desired_date) == 0:
         return "no available slots for the desired period"
     else:
-        # Terminate the former appointment
+        # terminate the former appointment
         cancel_appointment.invoke({
             "date": old_date,
             "id_number": id_number,
             "doctor_name": doctor_name
         })
 
-        # Make another appointment for the new date
+        # make another appointment for the new date
         set_appointment.invoke({
             "desired_date": new_date,
             "id_number": id_number,
