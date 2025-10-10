@@ -40,3 +40,87 @@ poetry install
 
 4. Run the app 
 uvicorn main:app --reload
+
+
+## Usage
+
+### Example API request
+```bash 
+curl -X POST "http://localhost:8000/execute" \
+     -H "Content-Type: application/json" \
+     -d '
+        {
+            "id_number": 12345678,
+            "intent": "book_appointment",
+            "messages": [
+                {"role": "user", "content": "i want to book an appointment with Dr. Adams tomorrow morning"}
+            ],
+            "details": {
+                "patient_name": "John Doe",
+                "doctor_name": "Dr. Adams",
+                "date": "10-10-2025",
+                "time": "09:00"
+            }
+        }
+     '
+
+### Example response
+
+{
+    "id_number": 12345678,
+    "intent": "book_appointment",
+    "details": {
+        "patient_name": "John Doe",
+        "doctor_name": "Dr. Adams",
+        "specialisation": null,
+        "date": "10-10-2025",
+        "time": "09:00",
+        "appointment_id": null
+    },
+    "messages": [
+        {
+            "role": "human",
+            "content": "i want to book an appointment with Dr. Adams tomorrow morning",
+            "name": null
+        },
+        {
+            "role": "human",
+            "content": "user's identification number is 12345678",
+            "name": null
+        },
+        {
+            "role": "human",
+            "content": "i want to book an appointment with Dr. Adams tomorrow morning",
+            "name": null
+        },
+        {
+            "role": "human",
+            "content": "user's identification number is 12345678",
+            "name": null
+        },
+        {
+            "role": "ai",
+            "content": "I’m sorry, but **Dr. Adams isn’t one of the doctors we have available for scheduling**. Here are the doctors you can book with:\n\n- Kevin Anderson  \n- Robert Martinez  \n- Susan Davis  \n- Daniel Miller  \n- Sarah Wilson  \n- Michael Green  \n- Lisa Brown  \n- Jane Smith  \n- Emily Johnson  \n- John Doe  \n\nCould you let me know which of these doctors you’d like to see tomorrow morning? Once you pick one, I can go ahead and schedule the appointment for you.",
+            "name": null
+        }
+    ],
+    "next": "FINISH",
+    "current_reasoning": "User wants to book an appointment with Dr. Adams tomorrow morning, which is a booking action."
+}
+
+
+```markdown
+## Future Improvements
+- [ ] Add real-time database integration (e.g., PostgreSQL)
+- [ ] Add user authentication
+- [ ] Build React-based conversational UI
+- [ ] Integrate calendar and reminders
+
+
+## Contributing
+Pull requests are welcome!  
+For major changes, please open an issue first to discuss what you’d like to change.
+
+
+## License
+This project is licensed under the MIT License.
