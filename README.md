@@ -112,7 +112,7 @@ curl -X POST "http://localhost:8000/execute" \
 
 ## Future Improvements
 ```markdown
-- [ ] Add real-time database integration (e.g., PostgreSQL)
+- [ ] Add real-time database integration (PostgreSQL)
 - [ ] Add user authentication
 - [ ] Build React-based conversational UI
 - [ ] Integrate calendar and reminders
