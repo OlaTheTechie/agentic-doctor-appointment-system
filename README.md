@@ -1,7 +1,7 @@
 # doctors-appointment-agent
 A multi-agent healthcare assistant that books, manages, and optimizes doctor appointments effortlessly
 
-![Project Screenshot](https://github.com/OlaTheTechie/doctors-appointment-agent/blob/main/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
+![Project Screenshot](/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
 
 
 ## Overview
@@ -112,7 +112,7 @@ curl -X POST "http://localhost:8000/execute" \
 
 ## Future Improvements
 ```markdown
-- [ ] Add real-time database integration (e.g., PostgreSQL)
+- [ ] Add real-time database integration (PostgreSQL)
 - [ ] Add user authentication
 - [ ] Build React-based conversational UI
 - [ ] Integrate calendar and reminders
