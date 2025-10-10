@@ -1,12 +1,7 @@
 # doctors-appointment-agent
 A multi-agent healthcare assistant that books, manages, and optimizes doctor appointments effortlessly
 
-![Project Screenshot](assets/images/online-doctor-appointment-ai-agent_x.png)
-
-
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=flat-square&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-Framework-brightgreen.svg?style=flat-square&logo=fastapi&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-Agent-yellow.svg?style=flat-square)
+![Project Screenshot](https://github.com/OlaTheTechie/doctors-appointment-agent/blob/main/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
 
 
 ## Overview
@@ -44,7 +39,7 @@ poetry install
 
 4. Run the app 
 uvicorn main:app --reload
-
+```
 
 ## Usage
 
@@ -67,9 +62,10 @@ curl -X POST "http://localhost:8000/execute" \
             }
         }
      '
+```
 
 ### Example response
-
+```bash
 {
     "id_number": 12345678,
     "intent": "book_appointment",
@@ -111,7 +107,7 @@ curl -X POST "http://localhost:8000/execute" \
     "next": "FINISH",
     "current_reasoning": "User wants to book an appointment with Dr. Adams tomorrow morning, which is a booking action."
 }
-
+```
 
 
 ## Future Improvements
@@ -120,7 +116,7 @@ curl -X POST "http://localhost:8000/execute" \
 - [ ] Add user authentication
 - [ ] Build React-based conversational UI
 - [ ] Integrate calendar and reminders
-
+```
 
 ## Contributing
 Pull requests are welcome!  
