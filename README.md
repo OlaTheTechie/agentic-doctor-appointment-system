@@ -1,9 +1,12 @@
 # doctors-appointment-agent
 A multi-agent healthcare assistant that books, manages, and optimizes doctor appointments effortlessly
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-Framework-green)
-![LangChain](https://img.shields.io/badge/LangChain-Agent-yellow)
+![Project Screenshot](assets/images/online-doctor-appointment-ai-agent_x.png)
+
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=flat-square&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Framework-brightgreen.svg?style=flat-square&logo=fastapi&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-Agent-yellow.svg?style=flat-square)
 
 
 ## Overview
@@ -18,6 +21,7 @@ Users can chat naturally (e.g., *"Book me a dentist appointment next Tuesday"*) 
 - Supports multiple query types (information requests, booking requests). All can be sent to the same enpoint
 - FastAPI backend with structured agent state tracking
 - Easily extendable with new specializations or appointment logic
+- Uses LangGraph for agent logic
 
 
 ## Tech Stack
@@ -109,8 +113,9 @@ curl -X POST "http://localhost:8000/execute" \
 }
 
 
-```markdown
+
 ## Future Improvements
+```markdown
 - [ ] Add real-time database integration (e.g., PostgreSQL)
 - [ ] Add user authentication
 - [ ] Build React-based conversational UI
