@@ -205,13 +205,15 @@ def initialize_session_state():
 def check_api_status() -> bool:
     """check if the backend api is accessible"""
     try:
-        # try the health endpoint first (for enhanced backend)
-        response = requests.get("http://127.0.0.1:8000/health", timeout=2)
+        # Use the configured backend URL instead of hardcoded localhost
+        health_url = f"{BACKEND_URL}/health"
+        response = requests.get(health_url, timeout=5)
         if response.status_code == 200:
             return True
         
-        # fallback to docs endpoint (for original backend)
-        response = requests.get("http://127.0.0.1:8000/docs", timeout=2)
+        # fallback to docs endpoint
+        docs_url = f"{BACKEND_URL}/docs"
+        response = requests.get(docs_url, timeout=5)
         return response.status_code == 200
     except:
         return False
@@ -1117,10 +1119,11 @@ with col1:
     st.markdown("### System Status")
     
     if st.session_state.api_status:
-        st.success("Backend Connected")
+        st.success("Backend Connected ✅")
+        st.info(f"Connected to: {BACKEND_URL}")
     else:
-        st.error("Backend Disconnected")
-        st.warning("Please ensure the backend server is running on http://127.0.0.1:8000")
+        st.error("Backend Disconnected ❌")
+        st.warning(f"Please ensure the backend server is running on {BACKEND_URL}")
     
     st.markdown(f"**Session Messages:** {len(st.session_state.messages)}")
     
