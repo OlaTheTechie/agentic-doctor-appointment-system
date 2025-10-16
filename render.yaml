@@ -18,7 +18,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false  # Set this in Render dashboard
       - key: ALLOWED_ORIGINS
-        value: "https://your-streamlit-app.streamlit.app,http://localhost:8501"
+        value: "https://agentic-doctor-appointment-system-oladimeji.streamlit.app/,http://localhost:8501,http://localhost:3000"
     # Health check
     healthCheckPath: /health
     # Auto-deploy from main branch
