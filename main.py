@@ -380,7 +380,7 @@ if __name__ == "__main__":
         host=host,
         port=port,
         log_level="info",
-        reload=settings.debug,
+        reload=False,  # Never reload in production
         access_log=True,
-        workers=1 if settings.debug else 2  # Multiple workers in production
+        workers=1  # Single worker for Render compatibility
     )

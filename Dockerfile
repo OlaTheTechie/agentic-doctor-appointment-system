@@ -32,7 +32,6 @@ FROM python:3.10-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PORT=8000 \
     HOST=0.0.0.0
 
 # Install runtime dependencies
