@@ -35,14 +35,17 @@ def check_availability_by_doctor(
             (df["date_slot"] == desired_date.date) &
             (df["doctor_name"] == doctor_name) &
             (df["is_available"] == True)
-        ]["time_slot"]
+        ]["time_slot"].unique()  # Remove duplicates
     )
 
     if len(available_rows) == 0: 
-        output = "no availability in the entire day"
+        output = f"Sorry, {doctor_name.title()} has no availability on {desired_date.date}."
     else: 
-        output = f"the availability for the date {desired_date.date}\n"
-        output += "available slots: " + ", ".join(available_rows)
+        # Sort the time slots and format simply
+        available_rows.sort()
+        output = f"Yes! {doctor_name.title()} is available on {desired_date.date}.\n\n"
+        output += f"Available times: {', '.join(available_rows)}\n\n"
+        output += f"({len(available_rows)} slots available)"
 
     return output
 

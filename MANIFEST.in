@@ -1,0 +1,33 @@
+# include additional files in the package
+
+# documentation
+include README.md
+include LICENSE
+recursive-include docs *.md
+recursive-include docs *.rst
+
+# configuration files
+include *.conf
+include *.json
+include .env.template
+exclude .env
+
+# data files
+recursive-include data *.csv
+exclude data/chat_storage/*.json
+
+# ui files
+recursive-include ui *.py
+recursive-include ui *.md
+
+# tests
+recursive-include tests *.py
+
+# exclude development files
+exclude *.pyc
+exclude .DS_Store
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude .git *
+recursive-exclude .venv *
+recursive-exclude logs *

@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
-
+.kiro
+.vscode
+docs
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -174,3 +176,19 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+# Environment variables
+.env.local
+.env.*.local
+# Backup files
+*.backup.*
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+# Chat storage (keep structure, ignore content)
+data/chat_storage/*.json
+data/chat_storage/*.tmp
+# Logs
+logs/
+# Cache
+*.pyc
