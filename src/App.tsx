@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Calendar, MessageCircle, Clock, Stethoscope, Sparkles, LucideIcon } from 'lucide-react';
 import ChatInterface, { ChatInterfaceRef } from './components/ChatInterface';
 import ErrorBoundary from './components/ErrorBoundary';
