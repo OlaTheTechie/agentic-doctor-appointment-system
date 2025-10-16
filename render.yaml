@@ -18,7 +18,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false  # Set this in Render dashboard
       - key: ALLOWED_ORIGINS
-        value: "http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501,https://oladimeji-doctor-appointment-system.vercel.app"
+        value: "https://agentic-doctor-appointment-system.vercel.app,http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501,https://oladimeji-doctor-appointment-system.vercel.app"
     # Health check
     healthCheckPath: /health
     # Auto-deploy from main branch
