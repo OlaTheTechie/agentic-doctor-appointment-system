@@ -21,7 +21,7 @@ services:
       retries: 3
       start_period: 40s
 
-  # Optional: Add Redis for caching (future enhancement)
+#  redis for caching (future enhancement)
   # redis:
   #   image: redis:7-alpine
   #   ports:

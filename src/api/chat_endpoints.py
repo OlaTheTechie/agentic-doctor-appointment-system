@@ -372,8 +372,7 @@ async def delete_chat_session(session_id: str, patient_id: int):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"failed to delete session: {str(e)}"
         )
-@chat_rout
-er.get("/storage/stats")
+@chat_router.get("/storage/stats")
 async def get_storage_stats():
     """get chat storage statistics"""
     try:

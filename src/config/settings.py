@@ -30,14 +30,35 @@ class APISettings(BaseSettings):
 class CORSSettings(BaseSettings):
     """cors configuration"""
     
-    allowed_origins: List[str] = Field(
-        default=["http://localhost:8501", "http://localhost:8502"],
+    allowed_origins_str: str = Field(
+        default="http://localhost:8501,http://localhost:8502",
         env="ALLOWED_ORIGINS"
     )
     allow_credentials: bool = Field(default=True)
-    allow_methods: List[str] = Field(default=["GET", "POST", "OPTIONS"])
-    allow_headers: List[str] = Field(default=["*"])
+    allow_methods_str: str = Field(default="GET,POST,OPTIONS", env="ALLOW_METHODS")
+    allow_headers_str: str = Field(default="*", env="ALLOW_HEADERS")
     max_age: int = Field(default=3600)
+    
+    @property
+    def allow_methods(self) -> List[str]:
+        """Parse comma-separated methods string into list"""
+        if not self.allow_methods_str:
+            return ["GET", "POST", "OPTIONS"]
+        return [method.strip() for method in self.allow_methods_str.split(",") if method.strip()]
+    
+    @property
+    def allow_headers(self) -> List[str]:
+        """Parse comma-separated headers string into list"""
+        if not self.allow_headers_str:
+            return ["*"]
+        return [header.strip() for header in self.allow_headers_str.split(",") if header.strip()]
+    
+    @property
+    def allowed_origins(self) -> List[str]:
+        """Parse comma-separated origins string into list"""
+        if not self.allowed_origins_str:
+            return ["http://localhost:8501", "http://localhost:8502"]
+        return [origin.strip() for origin in self.allowed_origins_str.split(",") if origin.strip()]
     
     model_config = {
         "env_file": ".env",

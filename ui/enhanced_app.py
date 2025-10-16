@@ -27,11 +27,17 @@ API_URL = f"{BACKEND_URL}/execute"
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "15"))
 
 # For Streamlit Cloud deployment, check if secrets are available
+# BUT prioritize local development (only use secrets if not running locally)
 try:
     if hasattr(st, 'secrets') and 'api' in st.secrets:
-        BACKEND_URL = st.secrets["api"]["backend_url"]
-        API_URL = f"{BACKEND_URL}/execute"
-        REQUEST_TIMEOUT = st.secrets["api"]["request_timeout"]
+        # Only use secrets if we're not running on localhost
+        secrets_url = st.secrets["api"]["backend_url"]
+        if "localhost" not in secrets_url and "127.0.0.1" not in secrets_url:
+            # We're in production, use secrets
+            BACKEND_URL = secrets_url
+            API_URL = f"{BACKEND_URL}/execute"
+            REQUEST_TIMEOUT = st.secrets["api"]["request_timeout"]
+        # If secrets contain localhost, we're in local dev, keep defaults
 except Exception:
     pass  # Use environment variables or defaults
 
@@ -214,8 +220,11 @@ def check_api_status() -> bool:
 def create_chat_session(patient_id: int) -> str:
     """create a new memory-powered chat session"""
     try:
+        url = f"{API_URL.replace('/execute', '')}/api/v1/chat/sessions"
+        
         response = requests.post(
-            f"{API_URL.replace('/execute', '')}/api/v1/chat/sessions",
+            url,
+            headers={"Content-Type": "application/json"},
             json={"patient_id": patient_id},
             timeout=REQUEST_TIMEOUT
         )
@@ -224,7 +233,7 @@ def create_chat_session(patient_id: int) -> str:
             session_data = response.json()
             return session_data["session_id"]
         else:
-            st.error(f"failed to create chat session: {response.text}")
+            st.error(f"failed to create chat session: {response.status_code} - {response.text}")
             return None
     except Exception as e:
         st.error(f"error creating chat session: {str(e)}")
