@@ -3,12 +3,18 @@ load_dotenv()
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
 
+# openai/gpt-oss-120b
+
 class LLM:
-    def __init__(self, model_name="openai/gpt-oss-120b"):
+    def __init__(self, model_name="gpt-5"):
         if not model_name:
             raise ValueError("model name is not defined")
         self.model_name = model_name
-        self.gpt_model = ChatGroq(model_name=self.model_name)
+        # self.gpt_model = ChatGroq(model_name=self.model_name)
+        self.gpt_model = ChatOpenAI(
+            model_name=model_name, 
+            temperature=0.0
+        )
 
     def get_model(self):
         return self.gpt_model
