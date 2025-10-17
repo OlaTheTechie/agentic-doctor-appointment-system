@@ -18,26 +18,26 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-# API configuration with environment-based URL
+# api configuration with environment-based url
 import os
 
-# Get backend URL from environment or use default
+# get backend url from environment or use default
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 API_URL = f"{BACKEND_URL}/execute"
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "15"))
 
-# For Streamlit Cloud deployment, check if secrets are available
-# BUT prioritize local development (only use secrets if not running locally)
+# for streamlit cloud deployment, check if secrets are available
+# but prioritize local development (only use secrets if not running locally)
 try:
     if hasattr(st, 'secrets') and 'api' in st.secrets:
-        # Only use secrets if we're not running on localhost
+        # only use secrets if we're not running on localhost
         secrets_url = st.secrets["api"]["backend_url"]
         if "localhost" not in secrets_url and "127.0.0.1" not in secrets_url:
-            # We're in production, use secrets
+            # we're in production, use secrets
             BACKEND_URL = secrets_url
             API_URL = f"{BACKEND_URL}/execute"
             REQUEST_TIMEOUT = st.secrets["api"]["request_timeout"]
-        # If secrets contain localhost, we're in local dev, keep defaults
+        # if secrets contain localhost, we're in local dev, keep defaults
 except Exception:
     pass  # Use environment variables or defaults
 
@@ -173,7 +173,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state
+# initialize session state
 def initialize_session_state():
     """initialize all session state variables including memory chat"""
     if "messages" not in st.session_state:
@@ -205,7 +205,7 @@ def initialize_session_state():
 def check_api_status() -> bool:
     """check if the backend api is accessible"""
     try:
-        # Use the configured backend URL instead of hardcoded localhost
+        # use the configured backend url instead of hardcoded localhost
         health_url = f"{BACKEND_URL}/health"
         response = requests.get(health_url, timeout=5)
         if response.status_code == 200:
@@ -696,13 +696,13 @@ def book_appointment_panel():
         submitted = st.form_submit_button("Book Appointment", use_container_width=True)
         
         if submitted:
-            # Validation
+            # validation
             if not patient_id or not validate_patient_id(patient_id):
                 st.error("Please enter a valid Patient ID (7-8 digits)")
             elif not specialization:
                 st.error("Please select a specialization")
             else:
-                # Construct query
+                # construct query
                 query_parts = [f"I would like to book an appointment for patient ID {patient_id}"]
                 if doctor_name:
                     query_parts.append(f"with Dr. {doctor_name}")
@@ -713,17 +713,17 @@ def book_appointment_panel():
                 
                 query = " ".join(query_parts)
                 
-                # Send API request first
+                # send api request first
                 result = send_api_request(query, int(patient_id), "book_appointment")
                 
                 if result["success"]:
-                    # Add user message to conversation history
+                    # add user message to conversation history
                     add_message("user", query)
                     
                     response_data = result["data"]
                     system_response = extract_ai_response(response_data)
                     
-                    # Check for repeated routing error
+                    # check for repeated routing error
                     if "Repeated routing detected" in system_response:
                         add_message("system", "I noticed we're going in circles. Let me reset and try a fresh approach. Please rephrase your request or try again.")
                         st.warning("Conversation loop detected. Please try rephrasing your request.")
@@ -789,7 +789,7 @@ def check_availability_panel():
         submitted = st.form_submit_button("Check Availability", use_container_width=True)
         
         if submitted:
-            # Construct query
+            # construct query
             query_parts = ["I would like to check availability"]
             if doctor_name:
                 query_parts.append(f"for Dr. {doctor_name}")
@@ -806,12 +806,12 @@ def check_availability_panel():
             
             query = " ".join(query_parts)
             
-            # Send API request first
+            # send api request first
             pid = int(patient_id) if patient_id and validate_patient_id(patient_id) else 12345678
             result = send_api_request(query, pid, "info_request")
             
             if result["success"]:
-                # Add user message to conversation history
+                # add user message to conversation history
                 add_message("user", query)
                 
                 response_data = result["data"]
@@ -892,11 +892,11 @@ def cancel_reschedule_panel():
         submitted = st.form_submit_button(f"{action_type}", use_container_width=True)
         
         if submitted:
-            # Validation
+            # validation
             if not patient_id or not validate_patient_id(patient_id):
                 st.error("Please enter a valid Patient ID (7-8 digits)")
             else:
-                # Construct query
+                # construct query
                 if action_type == "Cancel Appointment":
                     query_parts = [f"I would like to cancel my appointment for patient ID {patient_id}"]
                     query_parts.append(f"on {current_date.strftime('%Y-%m-%d')}")
@@ -920,21 +920,21 @@ def cancel_reschedule_panel():
                 
                 query = " ".join(query_parts)
                 
-                # Send API request first
+                # send api request first
                 result = send_api_request(query, int(patient_id), intent)
                 
                 if result["success"]:
-                    # Add user message to conversation history
+                    # add user message to conversation history
                     add_message("user", query)
                     
                     response_data = result["data"]
                     system_response = extract_ai_response(response_data)
                     
-                    # Check for repeated routing error
+                    # check for repeated routing error
                     if "Repeated routing detected" in system_response:
                         add_message("system", "I noticed we're going in circles. Let me reset and try a fresh approach. Please rephrase your request or try again.")
                         st.warning("Conversation loop detected. Please try rephrasing your request.")
-                        # Reset conversation state
+                        # reset conversation state
                         st.session_state.conversation_state = {"next": "", "current_reasoning": "", "step_count": 0}
                     elif system_response and len(system_response.strip()) > 10:
                         add_message("system", system_response)
@@ -953,7 +953,7 @@ def general_query_panel():
     st.markdown('<div class="form-section">', unsafe_allow_html=True)
     st.markdown("### General Query")
     
-    # Quick action buttons
+    # quick action buttons
     st.markdown("**Quick Actions:**")
     col1, col2, col3 = st.columns(3)
     
@@ -1000,12 +1000,12 @@ def general_query_panel():
             if not query_text.strip():
                 st.error("Please enter a question or query")
             else:
-                # Send API request first
+                # send api request first
                 pid = int(patient_id) if patient_id and validate_patient_id(patient_id) else 12345678
                 result = send_api_request(query_text, pid, "info_request")
                 
                 if result["success"]:
-                    # Add user message to conversation history
+                    # add user message to conversation history
                     add_message("user", query_text)
                     
                     response_data = result["data"]
@@ -1034,13 +1034,13 @@ def general_query_panel():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Initialize session state
+# initialize session state
 initialize_session_state()
 
-# Display header
+# display header
 display_header()
 
-# Main layout
+# main layout
 col1, col2 = st.columns([1, 2])
 
 with col1:

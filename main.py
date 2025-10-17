@@ -362,7 +362,7 @@ if __name__ == "__main__":
     import uvicorn
     import os
     
-    # Get port from environment (for Render deployment)
+    # get port from environment (for render deployment)
     port = int(os.getenv("PORT", settings.api.port))
     host = os.getenv("HOST", settings.api.host)
     

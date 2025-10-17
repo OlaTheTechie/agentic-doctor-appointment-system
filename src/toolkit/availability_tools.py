@@ -41,7 +41,7 @@ def check_availability_by_doctor(
     if len(available_rows) == 0: 
         output = f"Sorry, {doctor_name.title()} has no availability on {desired_date.date}."
     else: 
-        # Sort the time slots and format simply
+        # sort the time slots and format simply
         available_rows.sort()
         output = f"Yes! {doctor_name.title()} is available on {desired_date.date}.\n\n"
         output += f"Available times: {', '.join(available_rows)}\n\n"

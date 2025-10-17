@@ -71,7 +71,7 @@ setup(
     
     # project urls
     project_urls={
-        # "Bug Reports": "https://github.com/OlaTheTechie/doctor-appointment-system/issues",
+        # "bug reports": "https://github.com/OlaTheTechie/doctor-appointment-system/issues",
         "Source": "https://github.com/OlaTheTechie/agentic-doctor-appointment-system/",
         "Documentation": "https://github.com/OlaTheTechie/doctor-appointment-system/docs",
     },

@@ -21,31 +21,31 @@ from ..toolkit.availability_tools import check_availability_by_doctor, check_ava
 
 
 # ============================================================================
-# STATE MANAGEMENT
+# state management
 # ============================================================================
 
 @dataclass
 class ConversationState:
     """Clean state management for the multi-agent system"""
     
-    # Core conversation data
+    # core conversation data
     messages: List[BaseMessage]
     patient_id: int
     
-    # Current request context
+    # current request context
     current_intent: Optional[str] = None
     current_query: str = ""
     
-    # Agent coordination
+    # agent coordination
     active_agent: Optional[str] = None
     agent_response: Optional[str] = None
     
-    # Workflow control
+    # workflow control
     step_count: int = 0
     max_steps: int = 10
     is_complete: bool = False
     
-    # Error handling
+    # error handling
     last_error: Optional[str] = None
     retry_count: int = 0
     max_retries: int = 3
@@ -83,7 +83,7 @@ class ConversationState:
 
 
 # ============================================================================
-# INTENT CLASSIFICATION
+# intent classification
 # ============================================================================
 
 class IntentClassifier:
@@ -141,9 +141,9 @@ class IntentClassifier:
             
             response = self.llm.invoke(messages)
             
-            # Parse JSON response
+            # parse json response
             try:
-                # Clean the response content
+                # clean the response content
                 content = response.content.strip()
                 if content.startswith('```json'):
                     content = content.replace('```json', '').replace('```', '').strip()
@@ -152,7 +152,7 @@ class IntentClassifier:
                 return result
             except json.JSONDecodeError as e:
                 print(f"JSON parsing error: {e}")
-                # Fallback classification
+                # fallback classification
                 return self._fallback_classification(query)
                 
         except Exception as e:
@@ -176,7 +176,7 @@ class IntentClassifier:
 
 
 # ============================================================================
-# SPECIALIZED AGENTS
+# specialized agents
 # ============================================================================
 
 class AvailabilityAgent:
@@ -190,7 +190,7 @@ class AvailabilityAgent:
     def process_request(self, state: ConversationState) -> str:
         """Process availability check requests"""
         try:
-            # Prepare context for the agent
+            # prepare context for the agent
             system_msg = SystemMessage(content="""
             You are a specialized availability checking agent for a doctor appointment system.
             
@@ -223,13 +223,13 @@ class AvailabilityAgent:
                 patient_id=state.patient_id
             ))
             
-            # Build message history
+            # build message history
             messages = [system_msg] + state.messages[-5:]  # Last 5 messages for context
             
-            # Execute the agent
+            # execute the agent
             result = self.agent.invoke({"messages": messages})
             
-            # Extract the response
+            # extract the response
             if result.get("messages"):
                 return result["messages"][-1].content
             else:
@@ -251,7 +251,7 @@ class BookingAgent:
     def process_request(self, state: ConversationState) -> str:
         """Process booking-related requests"""
         try:
-            # Determine the specific booking action
+            # determine the specific booking action
             intent = state.current_intent
             
             if intent == "book_appointment":
@@ -307,13 +307,13 @@ class BookingAgent:
             
             system_msg = SystemMessage(content=system_content.format(patient_id=state.patient_id))
             
-            # Build message history
+            # build message history
             messages = [system_msg] + state.messages[-5:]
             
-            # Execute the agent
+            # execute the agent
             result = self.agent.invoke({"messages": messages})
             
-            # Extract the response
+            # extract the response
             if result.get("messages"):
                 return result["messages"][-1].content
             else:
@@ -353,10 +353,10 @@ class GeneralAssistantAgent:
             Patient ID: {patient_id}
             """.format(patient_id=state.patient_id))
             
-            # Build message history
+            # build message history
             messages = [system_msg] + state.messages[-3:]
             
-            # Get response from LLM
+            # get response from llm
             response = self.llm.invoke(messages)
             return response.content
             
@@ -366,43 +366,43 @@ class GeneralAssistantAgent:
 
 
 # ============================================================================
-# MULTI-AGENT ORCHESTRATOR
+# multi-agent orchestrator
 # ============================================================================
 
 class MultiAgentOrchestrator:
     """Main orchestrator that coordinates all specialized agents"""
     
     def __init__(self):
-        # Initialize LLM
+        # initialize llm
         llm_instance = LLM()
         self.llm = llm_instance.get_model()
         
-        # Initialize components
+        # initialize components
         self.intent_classifier = IntentClassifier(self.llm)
         self.availability_agent = AvailabilityAgent(self.llm)
         self.booking_agent = BookingAgent(self.llm)
         self.general_agent = GeneralAssistantAgent(self.llm)
         
-        # Build workflow graph
+        # build workflow graph
         self.workflow = self._build_workflow()
     
     def _build_workflow(self) -> CompiledStateGraph:
         """Build the LangGraph workflow"""
         
-        # Define the state graph
+        # define the state graph
         graph = StateGraph(dict)  # Use dict for flexibility
         
-        # Add nodes
+        # add nodes
         graph.add_node("classify_intent", self._classify_intent_node)
         graph.add_node("availability_agent", self._availability_agent_node)
         graph.add_node("booking_agent", self._booking_agent_node)
         graph.add_node("general_agent", self._general_agent_node)
         graph.add_node("finalize_response", self._finalize_response_node)
         
-        # Define edges
+        # define edges
         graph.add_edge(START, "classify_intent")
         
-        # Conditional routing from intent classification
+        # conditional routing from intent classification
         graph.add_conditional_edges(
             "classify_intent",
             self._route_to_agent,
@@ -413,7 +413,7 @@ class MultiAgentOrchestrator:
             }
         )
         
-        # All agents go to finalize
+        # all agents go to finalize
         graph.add_edge("availability_agent", "finalize_response")
         graph.add_edge("booking_agent", "finalize_response")
         graph.add_edge("general_agent", "finalize_response")
@@ -425,7 +425,7 @@ class MultiAgentOrchestrator:
         """Node for intent classification"""
         conv_state = ConversationState.from_dict(state)
         
-        # Get the latest user message
+        # get the latest user message
         user_messages = [msg for msg in conv_state.messages if isinstance(msg, HumanMessage)]
         if not user_messages:
             conv_state.current_intent = "general_inquiry"
@@ -434,7 +434,7 @@ class MultiAgentOrchestrator:
             latest_query = user_messages[-1].content
             conv_state.current_query = latest_query
             
-            # Classify intent
+            # classify intent
             classification = self.intent_classifier.classify_intent(latest_query, conv_state.messages)
             conv_state.current_intent = classification.get("intent", "general_inquiry")
         
@@ -498,7 +498,7 @@ class MultiAgentOrchestrator:
         """Node for finalizing the response"""
         conv_state = ConversationState.from_dict(state)
         
-        # Add the agent response to messages
+        # add the agent response to messages
         if conv_state.agent_response:
             conv_state.messages.append(AIMessage(content=conv_state.agent_response))
         
@@ -508,23 +508,23 @@ class MultiAgentOrchestrator:
     def process_request(self, patient_id: int, messages: List[BaseMessage]) -> Dict[str, Any]:
         """Main entry point for processing requests"""
         
-        # Initialize state
+        # initialize state
         initial_state = ConversationState(
             messages=messages,
             patient_id=patient_id
         )
         
         try:
-            # Execute the workflow
+            # execute the workflow
             result = self.workflow.invoke(initial_state.to_dict())
             
-            # Return the final state
+            # return the final state
             return result
             
         except Exception as e:
             print(f"MultiAgentOrchestrator error: {e}")
             
-            # Return error response
+            # return error response
             error_response = ConversationState(
                 messages=messages + [AIMessage(content=f"I'm sorry, I encountered an error: {str(e)}")],
                 patient_id=patient_id,
@@ -536,7 +536,7 @@ class MultiAgentOrchestrator:
 
 
 # ============================================================================
-# MAIN AGENT CLASS (for backward compatibility)
+# main agent class (for backward compatibility)
 # ============================================================================
 
 class AppointmentAgent:

@@ -3,6 +3,8 @@
 .kiro
 .vscode
 docs
+.env.example
+scripts
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

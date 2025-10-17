@@ -3,9 +3,9 @@ from datetime import datetime
 def convert_datetime_format(date_str):
     """Convert datetime string to match CSV format"""
     try:
-        # Parse the input format DD-MM-YYYY HH:MM
+        # parse the input format dd-mm-yyyy hh:mm
         date = datetime.strptime(date_str, "%d-%m-%Y %H:%M")
-        # Return in CSV format DD-MM-YYYY HH:MM (with colon, not dot)
+        # return in csv format dd-mm-yyyy hh:mm (with colon, not dot)
         return date.strftime("%d-%m-%Y %H:%M")
     except ValueError as e:
         print(f"Date conversion error: {e}")

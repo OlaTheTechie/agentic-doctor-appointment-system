@@ -1,4 +1,4 @@
-# Render Blueprint for Doctor Appointment System
+# render blueprint for doctor appointment system
 services:
   - type: web
     name: agentic-doctor-appointment-system
@@ -6,7 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     plan: starter
     
-    # Environment variables
+    # environment variables
     envVars:
       - key: HOST
         value: "0.0.0.0"
@@ -14,12 +14,10 @@ services:
         value: "false"
       - key: LOG_LEVEL
         value: "INFO"
-      - key: API_HOST
-        value: "0.0.0.0"
       - key: GROQ_API_KEY
-        value: ""  # Set this in Render dashboard if needed
+        value: ""  # set this in render dashboard if needed
       - key: OPENAI_API_KEY
-        value: ""  # Set this in Render dashboard if needed
+        value: ""  # set this in render dashboard if needed
       - key: ALLOWED_ORIGINS
         value: "*"
       - key: ALLOW_CREDENTIALS
@@ -33,13 +31,13 @@ services:
       - key: BACKUP_ENABLED
         value: "true"
     
-    # Health check
+    # health check
     healthCheckPath: /health
     
-    # Auto-deploy from main branch
+    # auto-deploy from main branch
     autoDeploy: true
     
-    # Disk storage for persistent chat data
+    # disk storage for persistent chat data
     disk:
       name: chat-storage
       mountPath: /app/data

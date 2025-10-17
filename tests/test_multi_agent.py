@@ -25,7 +25,7 @@ def test_multi_agent_system():
         print(f"failed to initialize multi-agent system: {e}")
         return False
     
-    # Test queries
+    # test queries
     test_cases = [
         {
             "query": "is jane smith available today",
@@ -61,13 +61,13 @@ def test_multi_agent_system():
         print(f"Query: '{test_case['query']}'")
         
         try:
-            # Create test messages
+            # create test messages
             messages = [HumanMessage(content=test_case['query'])]
             
-            # Process the request
+            # process the request
             result = orchestrator.process_request(12345678, messages)
             
-            # Check results
+            # check results
             active_agent = result.get('active_agent', 'unknown')
             agent_response = result.get('agent_response', 'No response')
             is_complete = result.get('is_complete', False)
@@ -76,7 +76,7 @@ def test_multi_agent_system():
             print(f"completed: {is_complete}")
             print(f"response: {agent_response[:100]}...")
             
-            # Check if correct agent was used
+            # check if correct agent was used
             if test_case['expected_agent'] in active_agent:
                 print(f"correct agent used")
                 success_count += 1
@@ -126,10 +126,10 @@ def test_intent_classification():
 def main():
     """Run all tests"""
     try:
-        # Test intent classification
+        # test intent classification
         test_intent_classification()
         
-        # Test full multi-agent system
+        # test full multi-agent system
         success = test_multi_agent_system()
         
         if success:

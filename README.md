@@ -4,13 +4,13 @@ A multi-agent healthcare assistant that books, manages, and optimizes doctor app
 ![Project Screenshot](/assets/images/automate-doctors-appointment-with-ai-agents-2.jpg)
 
 
-## Overview
+## overview
 
 Doctor Appointment Agent is an intelligent agent that simplifies the process of scheduling medical appointments.  
 Users can chat naturally (e.g., *"Book me a dentist appointment next Tuesday"*) and the system automatically handles the reasoning, slot-filling, and booking logic behind the scenes.
 
 
-## Features
+## features
 - Natural conversational agent for doctor appointment scheduling
 - Smart reasoning to extract patient intent and appointment details from api requests
 - Supports multiple query types (information requests, booking requests). All can be sent to the same enpoint
@@ -19,13 +19,13 @@ Users can chat naturally (e.g., *"Book me a dentist appointment next Tuesday"*) 
 - Uses LangGraph for agent logic
 
 
-## Tech Stack
+## tech stack
 - **Backend:** FastAPI, Python 3.10
 - **AI Agent:** LangChain, OpenAI API
 - **Data Models:** Pydantic, TypedDict
 - **Frontend (coming soon):** React, TailwindCSS
 
-## Installation
+## installation
 1. Clone the repository
 ```bash
 git clone https://github.com/OlaTheTechie/doctors-appointment-agent
@@ -41,9 +41,9 @@ poetry install
 uvicorn main:app --reload
 ```
 
-## Usage
+## usage
 
-### Example API request
+### example api request
 ```bash 
 curl -X POST "http://localhost:8000/execute" \
      -H "Content-Type: application/json" \
@@ -64,7 +64,7 @@ curl -X POST "http://localhost:8000/execute" \
      '
 ```
 
-### Example response
+### example response
 ```bash
 {
     "id_number": 12345678,
@@ -110,7 +110,7 @@ curl -X POST "http://localhost:8000/execute" \
 ```
 
 
-## Future Improvements
+## future improvements
 ```markdown
 - [ ] Add real-time database integration (PostgreSQL)
 - [ ] Add user authentication
@@ -118,10 +118,10 @@ curl -X POST "http://localhost:8000/execute" \
 - [ ] Integrate calendar and reminders
 ```
 
-## Contributing
+## contributing
 Pull requests are welcome!  
 For major changes, please open an issue first to discuss what you’d like to change.
 
 
-## License
+## license
 This project is licensed under the MIT License.
