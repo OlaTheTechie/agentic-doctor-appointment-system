@@ -2,16 +2,16 @@
 
 A beautiful, minimal, and human-centered frontend for the Doctor Appointment System.
 
-## ✨ Features
+## Features
 
-- **🎨 Clean, Minimal Design** - Beautiful gradient backgrounds and smooth animations
-- **💬 Real-time Chat Interface** - Intuitive chat with AI medical assistant
-- **📱 Fully Responsive** - Works perfectly on all devices
-- **🚀 Fast & Optimized** - Built with performance in mind
-- **🔄 Environment Aware** - Seamless local/production switching
+- **Clean, Minimal Design** - Beautiful gradient backgrounds and smooth animations
+- **Real-time Chat Interface** - Intuitive chat with AI medical assistant
+- **Fully Responsive** - Works perfectly on all devices
+- **Fast & Optimized** - Built with performance in mind
+- **Environment Aware** - Seamless local/production switching
 - **♿ Accessible** - Built with accessibility best practices
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **React 19** - Latest React with concurrent features
 - **TypeScript** - Type-safe development
@@ -20,7 +20,7 @@ A beautiful, minimal, and human-centered frontend for the Doctor Appointment Sys
 - **Lucide React** - Beautiful icons
 - **Axios** - HTTP client for API calls
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 16+ 
@@ -47,7 +47,7 @@ REACT_APP_API_BASE_URL=http://127.0.0.1:8000
 REACT_APP_ENVIRONMENT=development
 ```
 
-## 🎯 Usage
+## Usage
 
 ### Chat Interface
 - Enter your Patient ID (default: 12345678)
@@ -60,7 +60,7 @@ REACT_APP_ENVIRONMENT=development
 - "Cancel my appointment"
 - "What are the clinic hours?"
 
-## 🔧 Development
+## Development
 
 ### Available Scripts
 ```bash
@@ -85,7 +85,7 @@ src/
 └── App.tsx             # Main application
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Recommended)
 ```bash
@@ -108,7 +108,7 @@ npx serve -s build
 ### Environment Variables (Production)
 Set these in your deployment platform:
 ```
-REACT_APP_API_BASE_URL=https://your-backend.onrender.com
+REACT_APP_API_BASE_URL=your backend url (i used render for mine)
 REACT_APP_ENVIRONMENT=production
 ```
 
@@ -131,7 +131,7 @@ REACT_APP_ENVIRONMENT=production
 - **Inputs**: Clean borders with focus states
 - **Animations**: Smooth Framer Motion transitions
 
-## 🔌 API Integration
+## API Integration
 
 ### Backend Connection
 - Automatic connection testing
@@ -145,7 +145,7 @@ REACT_APP_ENVIRONMENT=production
 - `GET /agents/status` - Agent status
 - `POST /api/v1/chat/sessions` - Chat sessions
 
-## 🛠️ Customization
+## Customization
 
 ### Styling
 Edit `tailwind.config.js` for theme customization:
@@ -153,7 +153,7 @@ Edit `tailwind.config.js` for theme customization:
 theme: {
   extend: {
     colors: {
-      primary: { /* your colors */ },
+      primary: { /* your prefered colors */ },
       // ...
     }
   }
@@ -166,7 +166,7 @@ Update `src/api/agentApi.ts` for API changes:
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -188,14 +188,14 @@ npm install
 npm run type-check
 ```
 
-## 📱 Browser Support
+## Browser Support
 
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
+-  Chrome 90+
+-  Firefox 88+
+-  Safari 14+
+-  Edge 90+
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
@@ -203,7 +203,7 @@ npm run type-check
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
-## 📄 License
+## License
 
 This project is part of the Doctor Appointment Multi-Agent System.
 
@@ -216,4 +216,4 @@ This project is part of the Doctor Appointment Multi-Agent System.
 
 ---
 
-**Built with ❤️ for better healthcare experiences**
+**Built with love for better healthcare experiences**
