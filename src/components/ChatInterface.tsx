@@ -35,40 +35,34 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     scrollToBottom();
   }, [messages]);
 
-  // initialize chat session
+  // initialize chat session and welcome message
   useEffect(() => {
-    const initializeSession = async () => {
-      if (!sessionId && isOnline) {
-        try {
-          const session = await chatApi.createSession(parseInt(patientId));
-          setSessionId(session.session_id);
-          
-          // add welcome message
-          setMessages([{
-            id: '1',
-            type: 'assistant',
-            content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
-            timestamp: new Date()
-          }]);
-        } catch (error) {
-          console.error('Failed to initialize chat session:', error);
-          // fallback to welcome message without session
-          setMessages([{
-            id: '1',
-            type: 'assistant',
-            content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
-            timestamp: new Date()
-          }]);
-        }
-      }
-    };
+    if (messages.length === 0) {
+      // add welcome message immediately
+      setMessages([{
+        id: '1',
+        type: 'assistant',
+        content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
+        timestamp: new Date()
+      }]);
 
-    initializeSession();
-  }, [isOnline, patientId, sessionId]);
+      // try to create session in background (optional)
+      if (isOnline && !sessionId) {
+        chatApi.createSession(parseInt(patientId))
+          .then(session => {
+            setSessionId(session.session_id);
+            console.log('Chat session created:', session.session_id);
+          })
+          .catch(error => {
+            console.log('Session creation failed, continuing without persistence:', error);
+          });
+      }
+    }
+  }, [messages.length, isOnline, patientId, sessionId]);
 
   const handleSendMessage = async (messageText?: string) => {
     const textToSend = messageText || inputValue.trim();
-    if (!textToSend || !isOnline || isLoading || !sessionId) return;
+    if (!textToSend || !isOnline || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -81,35 +75,79 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     setInputValue('');
     setIsLoading(true);
 
-    try {
-      // use the memory-powered chat api instead of general query
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000'}/api/v1/chat/sessions/${sessionId}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          patient_id: parseInt(patientId),
-          content: textToSend
+    // create conversation context from recent messages
+    const recentMessages = messages.slice(-4); // last 4 messages for context (reduced to avoid length issues)
+    let contextualQuery = textToSend;
+    
+    if (recentMessages.length > 1) {
+      const context = recentMessages
+        .map(msg => {
+          const role = msg.type === 'user' ? 'Patient' : 'Assistant';
+          const content = msg.content.length > 200 ? msg.content.substring(0, 200) + '...' : msg.content;
+          return `${role}: ${content}`;
         })
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        .join('\n');
+      
+      // ensure total query length doesn't exceed reasonable limits
+      const contextPrefix = `Previous conversation:\n${context}\n\nCurrent question: `;
+      if (contextPrefix.length + textToSend.length < 2000) {
+        contextualQuery = contextPrefix + textToSend;
+      } else {
+        // fallback to just the current question if context is too long
+        contextualQuery = textToSend;
       }
+    }
 
-      const data = await response.json();
+    try {
+      // use the existing working API with enhanced context
+      const response = await appointmentApi.generalQuery({
+        query: contextualQuery,
+        id_number: parseInt(patientId)
+      });
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
-        content: data.ai_response || 'I apologize, but I encountered an issue processing your request. Please try again.',
+        content: response.messages[response.messages.length - 1]?.content || 'I apologize, but I encountered an issue processing your request. Please try again.',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+
+      // optionally save to session if session exists
+      if (sessionId) {
+        try {
+          await chatApi.sendMessage(sessionId, textToSend, parseInt(patientId));
+        } catch (error) {
+          console.log('Failed to save to session, continuing without persistence:', error);
+        }
+      }
     } catch (error) {
       console.error('Chat error:', error);
+      
+      // try fallback without context if the contextual query failed
+      if (contextualQuery !== textToSend) {
+        try {
+          console.log('Retrying without context...');
+          const fallbackResponse = await appointmentApi.generalQuery({
+            query: textToSend,
+            id_number: parseInt(patientId)
+          });
+
+          const assistantMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            type: 'assistant',
+            content: fallbackResponse.messages[fallbackResponse.messages.length - 1]?.content || 'I apologize, but I encountered an issue processing your request. Please try again.',
+            timestamp: new Date()
+          };
+
+          setMessages(prev => [...prev, assistantMessage]);
+          return; // exit early if fallback succeeds
+        } catch (fallbackError) {
+          console.error('Fallback also failed:', fallbackError);
+        }
+      }
+      
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',

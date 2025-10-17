@@ -59,12 +59,12 @@ export const chatApi = {
   /**
    * Send a message to a chat session
    */
-  async sendMessage(sessionId: string, message: string): Promise<ChatMessage> {
+  async sendMessage(sessionId: string, message: string, patientId: number = 12345678): Promise<any> {
     try {
       const response = await chatClient.post(`/sessions/${sessionId}/messages`, {
         session_id: sessionId,
-        message: message,
-        role: 'user'
+        patient_id: patientId,
+        content: message
       });
       return response.data;
     } catch (error) {
