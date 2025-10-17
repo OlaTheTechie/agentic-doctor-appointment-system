@@ -1,6 +1,6 @@
-# 🚀 Frontend Deployment Checklist
+# 🚀 frontend deployment checklist
 
-## 📋 Pre-Deployment
+## 📋 pre-deployment
 
 ### ✅ Code Quality
 - [ ] TypeScript compilation passes (`npm run type-check`)
@@ -20,34 +20,34 @@
 - [ ] Error handling tested
 - [ ] Mobile responsiveness verified
 
-## 🚀 Vercel Deployment
+## 🚀 vercel deployment
 
-### Step 1: Prepare Repository
+### step 1: prepare repository
 ```bash
-# Ensure all changes are committed
+# ensure all changes are committed
 git add .
 git commit -m "Ready for deployment"
 git push origin main
 ```
 
-### Step 2: Deploy to Vercel
+### step 2: deploy to vercel
 ```bash
-# Option A: Vercel CLI
+# option a: vercel cli
 npm i -g vercel
 vercel --prod
 
-# Option B: GitHub Integration
-# Connect repository in Vercel dashboard
+# option b: github integration
+# connect repository in vercel dashboard
 ```
 
-### Step 3: Configure Environment Variables
+### step 3: configure environment variables
 In Vercel dashboard, add:
 ```
 REACT_APP_API_BASE_URL=https://agentic-doctor-appointment-system.onrender.com
 REACT_APP_ENVIRONMENT=production
 ```
 
-### Step 4: Update Backend CORS
+### step 4: update backend cors
 Add your Vercel URL to backend ALLOWED_ORIGINS:
 ```
 ALLOWED_ORIGINS=https://your-app.vercel.app,http://localhost:3000
@@ -55,33 +55,33 @@ ALLOWED_ORIGINS=https://your-app.vercel.app,http://localhost:3000
 
 ## ✅ Post-Deployment Verification
 
-### Functional Testing
+### functional testing
 - [ ] Application loads correctly
 - [ ] Chat interface responsive
 - [ ] Backend connection working
 - [ ] Error handling functional
 - [ ] Mobile experience smooth
 
-### Performance Testing
+### performance testing
 - [ ] Page load time < 3s
 - [ ] First Contentful Paint < 1.5s
 - [ ] No console errors
 - [ ] Smooth animations
 
-### Cross-Browser Testing
+### cross-browser testing
 - [ ] Chrome ✅
 - [ ] Firefox ✅
 - [ ] Safari ✅
 - [ ] Edge ✅
 - [ ] Mobile browsers ✅
 
-## 🔧 Troubleshooting
+## 🔧 troubleshooting
 
-### Common Issues
+### common issues
 
 **Build Failures:**
 ```bash
-# Clear cache
+# clear cache
 rm -rf node_modules .next
 npm install
 npm run build
@@ -99,49 +99,49 @@ npm run build
 
 **TypeScript Errors:**
 ```bash
-# Check types
+# check types
 npm run type-check
 
-# Fix common issues
+# fix common issues
 npm install @types/react @types/react-dom
 ```
 
 ## 📊 Performance Optimization
 
-### Implemented Optimizations
+### implemented optimizations
 - ✅ Code splitting
 - ✅ Tree shaking
 - ✅ Image optimization
 - ✅ Lazy loading
 - ✅ Bundle analysis
 
-### Monitoring
+### monitoring
 - Vercel Analytics (automatic)
 - Web Vitals tracking
 - Error boundary reporting
 - Performance metrics
 
-## 🎯 Success Metrics
+## 🎯 success metrics
 
-### Performance Targets
+### performance targets
 - **First Contentful Paint:** < 1.5s ✅
 - **Largest Contentful Paint:** < 2.5s ✅
 - **Time to Interactive:** < 3s ✅
 - **Cumulative Layout Shift:** < 0.1 ✅
 
-### Reliability Targets
+### reliability targets
 - **Uptime:** 99.9% ✅
 - **Error Rate:** < 0.1% ✅
 - **Backend Connection:** 99%+ ✅
 
 ## 🔄 Continuous Deployment
 
-### Automatic Deployment
+### automatic deployment
 - ✅ Push to main → Auto deploy
 - ✅ Pull requests → Preview deployments
 - ✅ Environment-specific builds
 
-### Rollback Strategy
+### rollback strategy
 - Vercel dashboard → Instant rollback
 - Git revert → Automatic redeploy
 - Environment variables → Quick config changes

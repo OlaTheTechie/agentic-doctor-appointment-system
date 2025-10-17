@@ -85,7 +85,7 @@ const CancelReschedule: React.FC = () => {
     
     const selectedAction = data.action as 'cancel' | 'reschedule';
     
-    // Convert dates to backend format (DD-MM-YYYY HH:MM)
+    // convert dates to backend format (dd-mm-yyyy hh:mm)
     const oldDateStr = data.old_date;
     const oldTimeStr = data.old_time;
     const formattedOldDateTime = `${oldDateStr.split('-').reverse().join('-')} ${oldTimeStr}`;
@@ -97,7 +97,7 @@ const CancelReschedule: React.FC = () => {
       formattedNewDateTime = `${newDateStr.split('-').reverse().join('-')} ${newTimeStr}`;
     }
     
-    // Add user message
+    // add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
@@ -116,7 +116,7 @@ const CancelReschedule: React.FC = () => {
         action: selectedAction
       });
       
-      // Extract the last assistant message from the response
+      // extract the last assistant message from the response
       const lastMessage = response.messages[response.messages.length - 1];
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),

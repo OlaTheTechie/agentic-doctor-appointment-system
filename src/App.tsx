@@ -37,7 +37,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const chatRef = useRef<ChatInterfaceRef | null>(null);
 
-  // Test connection
+  // test connection
   useEffect(() => {
     const checkConnection = async () => {
       try {
@@ -55,15 +55,15 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll to chat and send message
+  // scroll to chat and send message
   const scrollToChat = (message: string) => {
-    // Scroll to chat interface
+    // scroll to chat interface
     const chatElement = document.getElementById('chat-interface');
     if (chatElement) {
       chatElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     
-    // Send message to chat
+    // send message to chat
     if (chatRef.current) {
       setTimeout(() => {
         chatRef.current?.sendMessage(message);

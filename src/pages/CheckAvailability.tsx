@@ -54,11 +54,11 @@ const CheckAvailability: React.FC = () => {
   const handleSubmit = async (data: Record<string, string>) => {
     setIsLoading(true);
     
-    // Convert date to backend format (DD-MM-YYYY)
+    // convert date to backend format (dd-mm-yyyy)
     const dateStr = data.date;
     const formattedDate = dateStr.split('-').reverse().join('-');
     
-    // Add user message
+    // add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
@@ -75,7 +75,7 @@ const CheckAvailability: React.FC = () => {
         date: formattedDate
       });
       
-      // Extract the last assistant message from the response
+      // extract the last assistant message from the response
       const lastMessage = response.messages[response.messages.length - 1];
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),

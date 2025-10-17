@@ -1,4 +1,4 @@
-# 🚀 React TypeScript Frontend Deployment Guide
+# 🚀 react typescript frontend deployment guide
 
 ## 📋 **Overview**
 
@@ -36,13 +36,13 @@ REACT_APP_ENVIRONMENT=production
 
 ### **1. Local Testing**
 ```bash
-# Install dependencies
+# install dependencies
 npm install
 
-# Start development server
+# start development server
 npm start
 
-# Test production build
+# test production build
 npm run build:production
 npm run preview
 ```
@@ -51,10 +51,10 @@ npm run preview
 
 #### **Option A: Vercel CLI**
 ```bash
-# Install Vercel CLI
+# install vercel cli
 npm i -g vercel
 
-# Deploy
+# deploy
 vercel --prod
 ```
 
@@ -164,16 +164,16 @@ TypeScript compilation errors
 
 ### **Debug Commands:**
 ```bash
-# Type checking
+# type checking
 npm run type-check
 
-# Linting
+# linting
 npm run lint
 
-# Local production build
+# local production build
 npm run build:production
 
-# Preview production build
+# preview production build
 npm run preview
 ```
 

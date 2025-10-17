@@ -1,8 +1,8 @@
-# 🎨 HealthChat - React TypeScript Frontend
+# 🎨 healthchat - react typescript frontend
 
 A beautiful, minimal, and human-centered frontend for the Doctor Appointment System.
 
-## Features
+## features
 
 - **Clean, Minimal Design** - Beautiful gradient backgrounds and smooth animations
 - **Real-time Chat Interface** - Intuitive chat with AI medical assistant
@@ -11,7 +11,7 @@ A beautiful, minimal, and human-centered frontend for the Doctor Appointment Sys
 - **Environment Aware** - Seamless local/production switching
 - **♿ Accessible** - Built with accessibility best practices
 
-## Tech Stack
+## tech stack
 
 - **React 19** - Latest React with concurrent features
 - **TypeScript** - Type-safe development
@@ -20,49 +20,49 @@ A beautiful, minimal, and human-centered frontend for the Doctor Appointment Sys
 - **Lucide React** - Beautiful icons
 - **Axios** - HTTP client for API calls
 
-## Quick Start
+## quick start
 
-### Prerequisites
+### prerequisites
 - Node.js 16+ 
 - npm or yarn
 
-### Installation
+### installation
 ```bash
-# Install dependencies
+# install dependencies
 npm install
 
-# Start development server
+# start development server
 npm start
 
-# Open http://localhost:3000
+# open http://localhost:3000
 ```
 
-### Environment Setup
+### environment setup
 ```bash
-# Copy environment template
+# copy environment template
 cp .env.example .env.local
 
-# Edit .env.local with your settings
+# edit .env.local with your settings
 REACT_APP_API_BASE_URL=http://127.0.0.1:8000
 REACT_APP_ENVIRONMENT=development
 ```
 
-## Usage
+## usage
 
-### Chat Interface
+### chat interface
 - Enter your Patient ID (default: 12345678)
 - Type messages or use quick actions
 - Get instant responses from AI medical assistant
 
-### Quick Actions
+### quick actions
 - "Book an appointment with Dr. Smith"
 - "Check availability for cardiology" 
 - "Cancel my appointment"
 - "What are the clinic hours?"
 
-## Development
+## development
 
-### Available Scripts
+### available scripts
 ```bash
 npm start          # Development server
 npm run build      # Production build
@@ -71,83 +71,83 @@ npm run type-check # TypeScript checking
 npm run lint       # ESLint checking
 ```
 
-### Project Structure
+### project structure
 ```
 src/
-├── components/          # Reusable components
+├── components/          # reusable components
 │   ├── ChatInterface.tsx
 │   ├── ErrorBoundary.tsx
 │   └── StatusIndicator.tsx
-├── api/                # API integration
+├── api/                # api integration
 │   ├── agentApi.ts
 │   └── chatApi.ts
-├── types/              # TypeScript types
+├── types/              # typescript types
 └── App.tsx             # Main application
 ```
 
-## Deployment
+## deployment
 
-### Vercel (Recommended)
+### vercel (recommended)
 ```bash
-# Install Vercel CLI
+# install vercel cli
 npm i -g vercel
 
-# Deploy
+# deploy
 vercel --prod
 ```
 
-### Manual Build
+### manual build
 ```bash
-# Build for production
+# build for production
 npm run build
 
-# Serve locally
+# serve locally
 npx serve -s build
 ```
 
-### Environment Variables (Production)
+### environment variables (production)
 Set these in your deployment platform:
 ```
 REACT_APP_API_BASE_URL=your backend url (i used render for mine)
 REACT_APP_ENVIRONMENT=production
 ```
 
-## 🎨 Design System
+## 🎨 design system
 
-### Colors
+### colors
 - **Primary**: Blue gradient (blue-500 to indigo-600)
 - **Success**: Green (green-400, green-600)
 - **Error**: Red (red-400, red-600)
 - **Background**: Soft gradient (blue-50 to indigo-50)
 
-### Typography
+### typography
 - **Font**: Inter (Google Fonts)
 - **Headings**: Semibold to Bold
 - **Body**: Regular (400)
 
-### Components
+### components
 - **Cards**: Rounded corners (rounded-2xl to rounded-3xl)
 - **Buttons**: Gradient backgrounds with hover effects
 - **Inputs**: Clean borders with focus states
 - **Animations**: Smooth Framer Motion transitions
 
-## API Integration
+## api integration
 
-### Backend Connection
+### backend connection
 - Automatic connection testing
 - Real-time status indicators
 - Error handling and retry logic
 - Environment-aware URL switching
 
-### Supported Endpoints
+### supported endpoints
 - `POST /execute` - General queries
 - `GET /health` - Health check
 - `GET /agents/status` - Agent status
 - `POST /api/v1/chat/sessions` - Chat sessions
 
-## Customization
+## customization
 
-### Styling
+### styling
 Edit `tailwind.config.js` for theme customization:
 ```javascript
 theme: {
@@ -160,19 +160,19 @@ theme: {
 }
 ```
 
-### API Configuration
+### api configuration
 Update `src/api/agentApi.ts` for API changes:
 ```typescript
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 ```
 
-## Troubleshooting
+## troubleshooting
 
-### Common Issues
+### common issues
 
 **Build Errors:**
 ```bash
-# Clear cache and reinstall
+# clear cache and reinstall
 rm -rf node_modules package-lock.json
 npm install
 ```
@@ -184,18 +184,18 @@ npm install
 
 **TypeScript Errors:**
 ```bash
-# Run type checking
+# run type checking
 npm run type-check
 ```
 
-## Browser Support
+## browser support
 
 -  Chrome 90+
 -  Firefox 88+
 -  Safari 14+
 -  Edge 90+
 
-## Contributing
+## contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
@@ -203,7 +203,7 @@ npm run type-check
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
-## License
+## license
 
 This project is part of the Doctor Appointment Multi-Agent System.
 

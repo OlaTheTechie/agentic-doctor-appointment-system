@@ -33,7 +33,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     scrollToBottom();
   }, [messages]);
 
-  // Welcome message
+  // welcome message
   useEffect(() => {
     if (messages.length === 0) {
       setMessages([{
@@ -87,7 +87,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     }
   };
 
-  // Expose sendMessage function to parent component
+  // expose sendmessage function to parent component
   useImperativeHandle(ref, () => ({
     sendMessage: (message: string) => {
       setInputValue(message);

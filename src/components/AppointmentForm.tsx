@@ -25,11 +25,11 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
   const handleInputChange = (name: string, value: string) => {
     const newData = { ...formData, [name]: value };
     setFormData(newData);
-    // Clear error when user starts typing
+    // clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
-    // Call onChange callback if provided
+    // call onchange callback if provided
     if (onChange) {
       onChange(newData);
     }

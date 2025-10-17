@@ -22,7 +22,7 @@ const GeneralQuery: React.FC = () => {
   const handleSubmit = async (data: Record<string, string>) => {
     setIsLoading(true);
     
-    // Add user message
+    // add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
@@ -38,7 +38,7 @@ const GeneralQuery: React.FC = () => {
         id_number: 1234567 // Default ID for general queries
       });
       
-      // Extract the last assistant message from the response
+      // extract the last assistant message from the response
       const lastMessage = response.messages[response.messages.length - 1];
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -81,7 +81,7 @@ const GeneralQuery: React.FC = () => {
     
     setMessages(prev => [...prev, userMessage]);
     
-    // Submit the question
+    // submit the question
     handleSubmit({ query: question });
   };
 

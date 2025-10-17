@@ -67,12 +67,12 @@ const BookAppointment: React.FC = () => {
   const handleSubmit = async (data: Record<string, string>) => {
     setIsLoading(true);
     
-    // Convert date and time to backend format (DD-MM-YYYY HH:MM)
+    // convert date and time to backend format (dd-mm-yyyy hh:mm)
     const dateStr = data.date;
     const timeStr = data.time;
     const formattedDateTime = `${dateStr.split('-').reverse().join('-')} ${timeStr}`;
     
-    // Add user message
+    // add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       type: 'user',
@@ -91,7 +91,7 @@ const BookAppointment: React.FC = () => {
         time: timeStr
       });
       
-      // Extract the last assistant message from the response
+      // extract the last assistant message from the response
       const lastMessage = response.messages[response.messages.length - 1];
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),

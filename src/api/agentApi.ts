@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UserQuery, BackendResponse } from '../types';
 
-// Environment-aware API configuration (applying lessons learned)
+// environment-aware api configuration (applying lessons learned)
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 const API_TIMEOUT = parseInt(process.env.REACT_APP_API_TIMEOUT || '30000');
 const ENVIRONMENT = process.env.REACT_APP_ENVIRONMENT || 'development';
@@ -18,11 +18,11 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  // Enable credentials for CORS if needed
+  // enable credentials for cors if needed
   withCredentials: false,
 });
 
-// Request interceptor for logging
+// request interceptor for logging
 apiClient.interceptors.request.use(
   (config) => {
     console.log(`Making ${config.method?.toUpperCase()} request to ${config.url}`);
@@ -34,7 +34,7 @@ apiClient.interceptors.request.use(
   }
 );
 
-// Response interceptor for error handling
+// response interceptor for error handling
 apiClient.interceptors.response.use(
   (response) => {
     console.log('Response received:', response.data);
@@ -42,16 +42,16 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     console.error('Response error:', error);
-    
+
     if (error.response) {
-      // Server responded with error status
+      // server responded with error status
       const errorMessage = error.response.data?.message || error.response.data?.error || 'Server error occurred';
       throw new Error(errorMessage);
     } else if (error.request) {
-      // Request was made but no response received
+      // request was made but no response received
       throw new Error('Unable to connect to the server. Please check your connection.');
     } else {
-      // Something else happened
+      // something else happened
       throw new Error('An unexpected error occurred');
     }
   }
@@ -96,7 +96,7 @@ export const appointmentApi = {
         time: data.time
       }
     };
-    
+
     return this.execute(query);
   },
 
@@ -109,7 +109,7 @@ export const appointmentApi = {
     date: string;
   }): Promise<BackendResponse> {
     const query: UserQuery = {
-      id_number: 1234567, // Default ID for availability checks
+      id_number: 1234567, // default id for availability checks
       messages: [{
         role: 'user',
         content: `Can you check if ${data.doctor_name} (${data.specialisation}) is available on ${data.date}?`
@@ -121,7 +121,7 @@ export const appointmentApi = {
         date: data.date
       }
     };
-    
+
     return this.execute(query);
   },
 
@@ -136,10 +136,10 @@ export const appointmentApi = {
     action: 'cancel' | 'reschedule';
   }): Promise<BackendResponse> {
     const intent = data.action === 'cancel' ? 'cancel_appointment' : 'reschedule_appointment';
-    const content = data.action === 'cancel' 
+    const content = data.action === 'cancel'
       ? `I want to cancel my appointment with ${data.doctor_name} on ${data.old_date}`
       : `I want to reschedule my appointment with ${data.doctor_name} from ${data.old_date} to ${data.new_date}`;
-    
+
     const query: UserQuery = {
       id_number: data.id_number,
       messages: [{
@@ -153,7 +153,7 @@ export const appointmentApi = {
         appointment_id: `${data.id_number}-${data.doctor_name}-${data.old_date}`
       }
     };
-    
+
     return this.execute(query);
   },
 
@@ -170,7 +170,7 @@ export const appointmentApi = {
       intent: 'info_request',
       query: data.query
     };
-    
+
     return this.execute(query);
   },
 
@@ -179,7 +179,7 @@ export const appointmentApi = {
    */
   async testConnection(): Promise<boolean> {
     try {
-      // Use the health endpoint (applying lessons learned)
+      // use the health endpoint (applying lessons learned)
       const response = await apiClient.get('/health', { timeout: 5000 });
       return response.status === 200;
     } catch (error) {
