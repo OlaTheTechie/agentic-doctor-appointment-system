@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } f
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, User, Bot, Loader2, AlertCircle } from 'lucide-react';
 import { appointmentApi } from '../api/agentApi';
+import chatApi from '../api/chatApi';
 
 interface Message {
   id: string;
@@ -23,6 +24,7 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [patientId, setPatientId] = useState<string>('12345678');
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -33,21 +35,40 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     scrollToBottom();
   }, [messages]);
 
-  // welcome message
+  // initialize chat session
   useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([{
-        id: '1',
-        type: 'assistant',
-        content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
-        timestamp: new Date()
-      }]);
-    }
-  }, [messages.length]);
+    const initializeSession = async () => {
+      if (!sessionId && isOnline) {
+        try {
+          const session = await chatApi.createSession(parseInt(patientId));
+          setSessionId(session.session_id);
+          
+          // add welcome message
+          setMessages([{
+            id: '1',
+            type: 'assistant',
+            content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
+            timestamp: new Date()
+          }]);
+        } catch (error) {
+          console.error('Failed to initialize chat session:', error);
+          // fallback to welcome message without session
+          setMessages([{
+            id: '1',
+            type: 'assistant',
+            content: "Hello! I'm your AI medical assistant. I can help you book appointments, check doctor availability, or answer any health-related questions. How can I assist you today?",
+            timestamp: new Date()
+          }]);
+        }
+      }
+    };
+
+    initializeSession();
+  }, [isOnline, patientId, sessionId]);
 
   const handleSendMessage = async (messageText?: string) => {
     const textToSend = messageText || inputValue.trim();
-    if (!textToSend || !isOnline || isLoading) return;
+    if (!textToSend || !isOnline || isLoading || !sessionId) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -61,20 +82,34 @@ const ChatInterface = forwardRef<ChatInterfaceRef, ChatInterfaceProps>(({ isOnli
     setIsLoading(true);
 
     try {
-      const response = await appointmentApi.generalQuery({
-        query: textToSend,
-        id_number: parseInt(patientId)
+      // use the memory-powered chat api instead of general query
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000'}/api/v1/chat/sessions/${sessionId}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          patient_id: parseInt(patientId),
+          content: textToSend
+        })
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
-        content: response.messages[response.messages.length - 1]?.content || 'I apologize, but I encountered an issue processing your request. Please try again.',
+        content: data.ai_response || 'I apologize, but I encountered an issue processing your request. Please try again.',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
+      console.error('Chat error:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: 'assistant',
