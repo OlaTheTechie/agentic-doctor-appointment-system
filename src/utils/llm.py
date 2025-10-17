@@ -10,7 +10,7 @@ class LLM:
         if not model_name:
             raise ValueError("model name is not defined")
         self.model_name = model_name
-        self.gpt_model = chatgroq(model_name=self.model_name)
+        self.gpt_model = Chatgroq(model_name=self.model_name)
         # self.gpt_model = ChatOpenAI(
         #     model_name=model_name, 
         #     temperature=0.0
