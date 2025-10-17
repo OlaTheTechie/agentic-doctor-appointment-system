@@ -21,7 +21,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false  # Set this in Render dashboard
       - key: ALLOWED_ORIGINS
-        value: "*"
+        value: "http://localhost:3000,http://localhost:3001,https://localhost:3000,https://localhost:3001"
       - key: ALLOW_CREDENTIALS
         value: "false"
       - key: ALLOW_METHODS
