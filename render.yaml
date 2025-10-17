@@ -1,28 +1,74 @@
+# # Render Blueprint for Doctor Appointment System
+# services:
+#   - type: web
+#     name: doctor-appointment-backend
+#     env: docker
+#     dockerfilePath: ./Dockerfile
+#     plan: starter  # Free tier
+#     # Environment variables
+#     envVars:
+#       - key: HOST
+#         value: 0.0.0.0
+#       - key: DEBUG
+#         value: false
+#       - key: LOG_LEVEL
+#         value: INFO
+#       - key: GROQ_API_KEY
+#         sync: false  # Set this in Render dashboard
+#       - key: OPENAI_API_KEY
+#         sync: false  # Set this in Render dashboard
+#       - key: ALLOWED_ORIGINS
+#         value: "https://agentic-doctor-appointment-system.vercel.app,http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501,https://oladimeji-doctor-appointment-system.vercel.app"
+#     # Health check
+#     healthCheckPath: /health
+#     # Auto-deploy from main branch
+#     autoDeploy: true
+#     # Disk storage for persistent chat data
+#     disk:
+#       name: chat-storage
+#       mountPath: /app/data
+#       sizeGB: 1
+
+
 # Render Blueprint for Doctor Appointment System
 services:
   - type: web
-    name: doctor-appointment-backend
+    name: agentic-doctor-appointment-system
     env: docker
     dockerfilePath: ./Dockerfile
-    plan: starter  # Free tier
+    plan: starter
+    
     # Environment variables
     envVars:
       - key: HOST
-        value: 0.0.0.0
+        value: "0.0.0.0"
       - key: DEBUG
-        value: false
+        value: "false"
       - key: LOG_LEVEL
-        value: INFO
+        value: "INFO"
+      - key: API_HOST
+        value: "0.0.0.0"
       - key: GROQ_API_KEY
         sync: false  # Set this in Render dashboard
       - key: OPENAI_API_KEY
         sync: false  # Set this in Render dashboard
       - key: ALLOWED_ORIGINS
-        value: "https://agentic-doctor-appointment-system.vercel.app,http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501,https://oladimeji-doctor-appointment-system.vercel.app"
+        value: "https://agentic-doctor-appointment-system.vercel.app,https://oladimeji-doctor-appointment-system.vercel.app,http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501"
+      - key: ALLOW_METHODS
+        value: "GET,POST,PUT,DELETE,OPTIONS"
+      - key: ALLOW_HEADERS
+        value: "*"
+      - key: DATA_FILE_PATH
+        value: "/app/data/doctor_availability.csv"
+      - key: BACKUP_ENABLED
+        value: "true"
+    
     # Health check
     healthCheckPath: /health
+    
     # Auto-deploy from main branch
     autoDeploy: true
+    
     # Disk storage for persistent chat data
     disk:
       name: chat-storage
