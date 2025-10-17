@@ -175,21 +175,12 @@ async def send_message_with_memory(session_id: str, request: SendMessageRequest)
         if SERVICES_AVAILABLE:
             try:
                 # prepare messages for multi-agent system
-                enhanced_messages = []
-                if context:
-                    enhanced_messages.append({
-                        "role": "system",
-                        "content": f"conversation context: {context}"
-                    })
-                enhanced_messages.append({
-                    "role": "user", 
-                    "content": request.content
-                })
+                from langchain_core.messages import HumanMessage, SystemMessage
                 
-                # convert to langchain messages
-                langchain_messages = message_service.convert_pydantic_to_langchain(
-                    [type('obj', (object,), msg)() for msg in enhanced_messages]
-                )
+                langchain_messages = []
+                if context:
+                    langchain_messages.append(SystemMessage(content=f"conversation context: {context}"))
+                langchain_messages.append(HumanMessage(content=request.content))
                 
                 # process with multi-agent system
                 result = appointment_agent.process_query(request.patient_id, langchain_messages)
