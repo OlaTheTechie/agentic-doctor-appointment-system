@@ -21,7 +21,9 @@ services:
       - key: OPENAI_API_KEY
         sync: false  # Set this in Render dashboard
       - key: ALLOWED_ORIGINS
-        value: "https://agentic-doctor-appointment-system.vercel.app,https://oladimeji-doctor-appointment-system.vercel.app,http://localhost:3000,http://localhost:3001,https://agentic-doctor-appointment-system-oladimeji.streamlit.app,http://localhost:8501"
+        value: "*"
+      - key: ALLOW_CREDENTIALS
+        value: "false"
       - key: ALLOW_METHODS
         value: "GET,POST,PUT,DELETE,OPTIONS"
       - key: ALLOW_HEADERS

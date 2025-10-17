@@ -34,7 +34,7 @@ class CORSSettings(BaseSettings):
         default="http://localhost:8501,http://localhost:8502",
         env="ALLOWED_ORIGINS"
     )
-    allow_credentials: bool = Field(default=True)
+    allow_credentials: bool = Field(default=True, env="ALLOW_CREDENTIALS")
     allow_methods_str: str = Field(default="GET,POST,OPTIONS", env="ALLOW_METHODS")
     allow_headers_str: str = Field(default="*", env="ALLOW_HEADERS")
     max_age: int = Field(default=3600)
