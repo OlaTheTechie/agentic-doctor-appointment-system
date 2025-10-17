@@ -58,6 +58,11 @@ class CORSSettings(BaseSettings):
         """Parse comma-separated origins string into list"""
         if not self.allowed_origins_str:
             return ["http://localhost:8501", "http://localhost:8502"]
+        
+        # Handle wildcard case
+        if self.allowed_origins_str.strip() == "*":
+            return ["*"]
+            
         return [origin.strip() for origin in self.allowed_origins_str.split(",") if origin.strip()]
     
     model_config = {

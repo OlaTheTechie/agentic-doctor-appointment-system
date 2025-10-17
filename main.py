@@ -117,6 +117,7 @@ async def log_requests(request: Request, call_next):
     return response
 
 # cors middleware
+logger.info(f"CORS Configuration: origins={settings.cors.allowed_origins}, credentials={settings.cors.allow_credentials}")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors.allowed_origins,

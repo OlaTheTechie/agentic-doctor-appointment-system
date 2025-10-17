@@ -17,11 +17,11 @@ services:
       - key: API_HOST
         value: "0.0.0.0"
       - key: GROQ_API_KEY
-        sync: false  # Set this in Render dashboard
+        value: ""  # Set this in Render dashboard if needed
       - key: OPENAI_API_KEY
-        sync: false  # Set this in Render dashboard
+        value: ""  # Set this in Render dashboard if needed
       - key: ALLOWED_ORIGINS
-        value: "http://localhost:3000,http://localhost:3001,https://localhost:3000,https://localhost:3001"
+        value: "*"
       - key: ALLOW_CREDENTIALS
         value: "false"
       - key: ALLOW_METHODS
