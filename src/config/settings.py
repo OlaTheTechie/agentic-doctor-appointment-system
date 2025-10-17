@@ -34,7 +34,12 @@ class CORSSettings(BaseSettings):
         default="http://localhost:8501,http://localhost:8502",
         env="ALLOWED_ORIGINS"
     )
-    allow_credentials: bool = Field(default=True, env="ALLOW_CREDENTIALS")
+    allow_credentials_str: str = Field(default="true", env="ALLOW_CREDENTIALS")
+    
+    @property
+    def allow_credentials(self) -> bool:
+        """Parse allow_credentials string to boolean"""
+        return self.allow_credentials_str.lower() not in ["false", "0", "no", "off"]
     allow_methods_str: str = Field(default="GET,POST,OPTIONS", env="ALLOW_METHODS")
     allow_headers_str: str = Field(default="*", env="ALLOW_HEADERS")
     max_age: int = Field(default=3600)
