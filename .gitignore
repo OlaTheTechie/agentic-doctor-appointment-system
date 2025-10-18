@@ -4,9 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-.env.example
-.env.local
-.env.production
+/.env.example
+/.env.local
+/.env.production
 
 # testing
 /coverage
