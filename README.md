@@ -1,4 +1,4 @@
-# 🎨 healthchat - react typescript frontend
+# healthchat - react typescript frontend
 
 A beautiful, minimal, and human-centered frontend for the Doctor Appointment System.
 
@@ -9,7 +9,7 @@ A beautiful, minimal, and human-centered frontend for the Doctor Appointment Sys
 - **Fully Responsive** - Works perfectly on all devices
 - **Fast & Optimized** - Built with performance in mind
 - **Environment Aware** - Seamless local/production switching
-- **♿ Accessible** - Built with accessibility best practices
+- **Accessible** - Built with accessibility best practices
 
 ## tech stack
 
